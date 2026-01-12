@@ -1,12 +1,37 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import TeslaHeader from "@/components/TeslaHeader";
+import HeroSection from "@/components/HeroSection";
+import VehicleCards from "@/components/VehicleCards";
+import EnergyCarousel from "@/components/EnergyCarousel";
+import DiscoverSection from "@/components/DiscoverSection";
+import CorporateGovernance from "@/components/CorporateGovernance";
+import QuestionBar from "@/components/QuestionBar";
+import TeslaFooter from "@/components/TeslaFooter";
 
 const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-background">
+      <TeslaHeader />
+      
+      {/* Main Hero with Vehicle Carousel */}
+      <HeroSection />
+      
+      {/* Vehicle Cards */}
+      <VehicleCards />
+      
+      {/* Energy Products Carousel */}
+      <EnergyCarousel />
+      
+      {/* Discover Section - FSD and Features */}
+      <DiscoverSection />
+      
+      {/* Corporate Governance Section */}
+      <CorporateGovernance />
+      
+      {/* Footer */}
+      <TeslaFooter />
+      
+      {/* Fixed Question Bar */}
+      <QuestionBar />
     </div>
   );
 };
