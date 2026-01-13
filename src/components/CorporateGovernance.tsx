@@ -1,5 +1,6 @@
 import corporateHero from "@/assets/corporate-hero.jpg";
 import InvestorRelationsHeader from "./InvestorRelationsHeader";
+import TeslaInvestmentPlatform from "./investment/TeslaInvestmentPlatform";
 
 interface Person {
   firstName: string;
@@ -90,6 +91,9 @@ const CorporateGovernance = () => {
           </div>
         </div>
       </div>
+
+      {/* Tesla Investment Platform - Below Corporate Governance */}
+      <TeslaInvestmentPlatform />
     </section>
   );
 };
