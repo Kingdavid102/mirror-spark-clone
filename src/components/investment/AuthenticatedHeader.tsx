@@ -56,7 +56,7 @@ const AuthenticatedHeader = () => {
                 <ChevronDown className="w-4 h-4" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56">
+            <DropdownMenuContent align="end" className="w-56 bg-background border-border">
               <DropdownMenuItem className="flex flex-col items-start">
                 <span className="font-medium">Signed in as</span>
                 <span className="text-sm text-muted-foreground truncate max-w-full">
@@ -64,16 +64,16 @@ const AuthenticatedHeader = () => {
                 </span>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => navigate('/')}>
+              <DropdownMenuItem onClick={() => navigate('/dashboard')}>
                 Dashboard
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate('/dashboard?tab=orders')}>
                 My Orders
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate('/dashboard?tab=portfolio')}>
                 Portfolio
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate('/dashboard?tab=settings')}>
                 Settings
               </DropdownMenuItem>
               <DropdownMenuSeparator />
