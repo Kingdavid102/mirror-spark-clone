@@ -1,22 +1,27 @@
-import InvestmentHeader from "./InvestmentHeader";
+import { useAuth } from '@/hooks/useAuth';
+import AuthenticatedHeader from "./AuthenticatedHeader";
 import InvestmentHero from "./InvestmentHero";
 import QuickActions from "./QuickActions";
-import AvailableInventory from "./AvailableInventory";
-import StockMarkets from "./StockMarkets";
+import EnhancedInventory from "./EnhancedInventory";
+import LiveStockMarkets from "./LiveStockMarkets";
+import UserPortfolio from "./UserPortfolio";
 import MarketNews from "./MarketNews";
 import PortfolioCTA from "./PortfolioCTA";
 import InvestmentFooter from "./InvestmentFooter";
 
 const TeslaInvestmentPlatform = () => {
+  const { user } = useAuth();
+
   return (
     <div className="bg-background">
-      <InvestmentHeader />
+      <AuthenticatedHeader />
       <InvestmentHero />
       <QuickActions />
-      <AvailableInventory />
-      <StockMarkets />
+      <EnhancedInventory />
+      <LiveStockMarkets />
+      {user && <UserPortfolio />}
       <MarketNews />
-      <PortfolioCTA />
+      {!user && <PortfolioCTA />}
       <InvestmentFooter />
     </div>
   );
