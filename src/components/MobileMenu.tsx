@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { ChevronRight, ChevronLeft, X, HelpCircle, Globe, User } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { ChevronRight, ChevronLeft, X, Globe, User } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 
 // Vehicle images
@@ -10,17 +10,30 @@ import modelYImage from "@/assets/model-y-menu.png";
 import modelXImage from "@/assets/model-x-menu.png";
 import cybertruckImage from "@/assets/cybertruck-menu.png";
 
+// Energy images
+import solarPanelsImage from "@/assets/solar-panels-menu.png";
+import solarRoofImage from "@/assets/solar-roof-menu.png";
+import powerwallImage from "@/assets/powerwall-menu.png";
+import megapackImage from "@/assets/megapack-menu.png";
+
+// Charging images
+import chargingCableImage from "@/assets/charging-cable-menu.png";
+import homeChargingImage from "@/assets/home-charging-menu.png";
+import superchargerImage from "@/assets/supercharger-menu.png";
+import wallConnectorBusinessImage from "@/assets/wall-connector-business-menu.png";
+import superchargerBusinessImage from "@/assets/supercharger-business-menu.png";
+
 interface MobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
 const vehicles = [
-  { name: "Model S", image: modelSImage, learnLink: "#model-s", orderLink: "#order-s" },
-  { name: "Model 3", image: model3Image, learnLink: "#model-3", orderLink: "#order-3" },
-  { name: "Model Y", image: modelYImage, learnLink: "#model-y", orderLink: "#order-y" },
-  { name: "Model X", image: modelXImage, learnLink: "#model-x", orderLink: "#order-x" },
-  { name: "Cybertruck", image: cybertruckImage, learnLink: "#cybertruck", orderLink: "#order-cybertruck" },
+  { name: "Model S", image: modelSImage, learnLink: "/vehicles/model-s", orderLink: "#order-s" },
+  { name: "Model 3", image: model3Image, learnLink: "/vehicles/model-3", orderLink: "#order-3" },
+  { name: "Model Y", image: modelYImage, learnLink: "/vehicles/model-y", orderLink: "#order-y" },
+  { name: "Model X", image: modelXImage, learnLink: "/vehicles/model-x", orderLink: "#order-x" },
+  { name: "Cybertruck", image: cybertruckImage, learnLink: "/vehicles/cybertruck", orderLink: "#order-cybertruck" },
 ];
 
 const vehicleSubLinks = [
@@ -39,6 +52,56 @@ const vehicleSubLinks = [
   "Semi",
   "Roadster",
   "Robotaxi",
+];
+
+const energyProducts = [
+  { name: "Solar Panels", image: solarPanelsImage, learnLink: "#solar-panels", orderLink: "#order-solar-panels" },
+  { name: "Solar Roof", image: solarRoofImage, learnLink: "#solar-roof", orderLink: "#order-solar-roof" },
+  { name: "Powerwall", image: powerwallImage, learnLink: "#powerwall", orderLink: "#order-powerwall" },
+  { name: "Megapack", image: megapackImage, learnLink: "#megapack", orderLink: null },
+];
+
+const energySubLinks = [
+  "Schedule a Consultation",
+  "Why Solar",
+  "Incentives",
+  "Support",
+  "Partner with Tesla",
+  "Commercial",
+  "Utilities",
+];
+
+const chargingProducts = [
+  { name: "Charging", image: chargingCableImage, learnLink: "#charging", secondLink: null, secondLabel: null },
+  { name: "Home Charging", image: homeChargingImage, learnLink: "#home-charging", secondLink: "#shop-charging", secondLabel: "Shop" },
+  { name: "Supercharging", image: superchargerImage, learnLink: "#supercharging", secondLink: "#find-supercharger", secondLabel: "Find" },
+  { name: "Wall Connector for Business", image: wallConnectorBusinessImage, learnLink: "#wall-connector-business", secondLink: "#order-business", secondLabel: "Order" },
+  { name: "Supercharger for Business", image: superchargerBusinessImage, learnLink: "#supercharger-business", secondLink: "#order-supercharger-business", secondLabel: "Order" },
+];
+
+const chargingSubLinks = [
+  "Help Me Charge",
+  "Charging Calculator",
+  "Charging With NACS",
+  "Supercharger Voting",
+  "Host a Supercharger",
+];
+
+const discoverLinks = [
+  "Demo Drive",
+  "Insurance",
+  "Current Offers",
+  "Learn",
+  "Video Guides",
+  "Customer Stories",
+  "Events",
+  "Safety",
+  "Find Us",
+  "Find a Collision Center",
+  "Find a Certified Installer",
+  "About",
+  "Careers",
+  "Investor Relations",
 ];
 
 const mainMenuItems = [
@@ -76,7 +139,76 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
     }
   };
 
+  const handleLinkClick = (link: string) => {
+    onClose();
+    if (link.startsWith("/")) {
+      navigate(link);
+    }
+  };
+
   if (!isOpen) return null;
+
+  const renderProductCard = (
+    product: { name: string; image: string; learnLink: string; orderLink?: string | null; secondLink?: string | null; secondLabel?: string | null },
+    showOrder: boolean = true
+  ) => (
+    <div 
+      key={product.name}
+      className="flex items-center gap-4 py-3 px-2 rounded-lg hover:bg-secondary/50 transition-colors"
+    >
+      <div className="w-36 h-20 flex-shrink-0">
+        <img 
+          src={product.image} 
+          alt={product.name}
+          className="w-full h-full object-contain"
+        />
+      </div>
+      <div className="flex flex-col gap-1">
+        <span className="text-lg font-semibold text-foreground">{product.name}</span>
+        <div className="flex items-center gap-4">
+          <button 
+            onClick={() => handleLinkClick(product.learnLink)}
+            className="text-sm text-foreground underline underline-offset-4 hover:text-muted-foreground"
+          >
+            Learn
+          </button>
+          {showOrder && product.orderLink && (
+            <a 
+              href={product.orderLink}
+              onClick={onClose}
+              className="text-sm text-foreground underline underline-offset-4 hover:text-muted-foreground"
+            >
+              Order
+            </a>
+          )}
+          {product.secondLink && product.secondLabel && (
+            <a 
+              href={product.secondLink}
+              onClick={onClose}
+              className="text-sm text-foreground underline underline-offset-4 hover:text-muted-foreground"
+            >
+              {product.secondLabel}
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderLinkList = (links: string[]) => (
+    <div className="mt-6 pt-4 border-t border-border">
+      {links.map((link) => (
+        <a 
+          key={link}
+          href={`#${link.toLowerCase().replace(/\s+/g, '-')}`}
+          onClick={onClose}
+          className="block py-3 text-base font-medium text-foreground hover:text-muted-foreground transition-colors"
+        >
+          {link}
+        </a>
+      ))}
+    </div>
+  );
 
   return (
     <div className="lg:hidden fixed inset-0 z-[100] bg-background animate-fade-in">
@@ -144,7 +276,6 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
         ) : activeSubmenu === "Vehicles" ? (
           // Vehicles Submenu
           <div className="px-4 py-4">
-            {/* Vehicle Cards with Images */}
             <div className="space-y-2">
               {vehicles.map((vehicle) => (
                 <div 
@@ -161,13 +292,12 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
                   <div className="flex flex-col gap-1">
                     <span className="text-lg font-semibold text-foreground">{vehicle.name}</span>
                     <div className="flex items-center gap-4">
-                      <a 
-                        href={vehicle.learnLink}
-                        onClick={onClose}
+                      <button 
+                        onClick={() => handleLinkClick(vehicle.learnLink)}
                         className="text-sm text-foreground underline underline-offset-4 hover:text-muted-foreground"
                       >
                         Learn
-                      </a>
+                      </button>
                       <a 
                         href={vehicle.orderLink}
                         onClick={onClose}
@@ -218,19 +348,71 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
               </div>
             </div>
             
-            {/* Additional Vehicle Links */}
-            <div className="mt-6 pt-4 border-t border-border">
-              {vehicleSubLinks.map((link) => (
-                <a 
-                  key={link}
-                  href={`#${link.toLowerCase().replace(/\s+/g, '-')}`}
-                  onClick={onClose}
-                  className="block py-3 text-base font-medium text-foreground hover:text-muted-foreground transition-colors"
+            {renderLinkList(vehicleSubLinks)}
+          </div>
+        ) : activeSubmenu === "Energy" ? (
+          // Energy Submenu
+          <div className="px-4 py-4">
+            <div className="space-y-2">
+              {energyProducts.map((product) => renderProductCard(product, true))}
+            </div>
+            {renderLinkList(energySubLinks)}
+          </div>
+        ) : activeSubmenu === "Charging" ? (
+          // Charging Submenu
+          <div className="px-4 py-4">
+            <div className="space-y-2">
+              {chargingProducts.map((product) => (
+                <div 
+                  key={product.name}
+                  className="flex items-center gap-4 py-3 px-2 rounded-lg hover:bg-secondary/50 transition-colors"
                 >
-                  {link}
-                </a>
+                  <div className="w-36 h-20 flex-shrink-0">
+                    <img 
+                      src={product.image} 
+                      alt={product.name}
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <span className="text-lg font-semibold text-foreground">{product.name}</span>
+                    <div className="flex items-center gap-4">
+                      <a 
+                        href={product.learnLink}
+                        onClick={onClose}
+                        className="text-sm text-foreground underline underline-offset-4 hover:text-muted-foreground"
+                      >
+                        Learn
+                      </a>
+                      {product.secondLink && product.secondLabel && (
+                        <a 
+                          href={product.secondLink}
+                          onClick={onClose}
+                          className="text-sm text-foreground underline underline-offset-4 hover:text-muted-foreground"
+                        >
+                          {product.secondLabel}
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </div>
               ))}
             </div>
+            {renderLinkList(chargingSubLinks)}
+          </div>
+        ) : activeSubmenu === "Discover" ? (
+          // Discover Submenu (no products, just links)
+          <div className="px-6 py-4">
+            {discoverLinks.map((link) => (
+              <a 
+                key={link}
+                href={`#${link.toLowerCase().replace(/\s+/g, '-')}`}
+                onClick={onClose}
+                className="block py-3 text-base font-medium text-foreground hover:text-muted-foreground transition-colors"
+              >
+                {link}
+              </a>
+            ))}
           </div>
         ) : (
           // Other Submenus (placeholder)
