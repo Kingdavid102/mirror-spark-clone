@@ -41,7 +41,6 @@ interface PortfolioItem {
 interface Profile {
   first_name: string | null;
   last_name: string | null;
-  email: string | null;
   region: string | null;
   language: string | null;
   get_updates: boolean | null;
